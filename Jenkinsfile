@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -38,7 +37,7 @@ pipeline {
         }
 
         failure {
-            echo 'Pipeline failed. Check the Maven console output and test reports.'
+            echo 'Build or tests failed. Check the Maven console output.'
         }
     }
 }
