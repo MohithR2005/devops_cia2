@@ -202,4 +202,74 @@ void shouldRegisterStudentWhenExactlyOneSeatRemains() {
     assertEquals(1, course.getCurrentEnrollment());
 }
 
+@Test
+void shouldAcceptCourseWithOneCredit() {
+    Student student = new Student("S104", "Arun");
+    Course course = new Course(
+            "CS304", "One Credit Course", 1, 30, true, null);
+
+    RegistrationService service = new RegistrationService();
+
+    assertTrue(service.register(student, course));
+    assertTrue(student.isRegistered("CS304"));
+    assertEquals(1, student.getTotalCredits());
+    assertEquals(1, course.getCurrentEnrollment());
+}
+
+@Test
+void shouldAcceptCourseWithSixCredits() {
+    Student student = new Student("S105", "Meera");
+    Course course = new Course(
+            "CS305", "Six Credit Course", 6, 30, true, null);
+
+    RegistrationService service = new RegistrationService();
+
+    assertTrue(service.register(student, course));
+    assertTrue(student.isRegistered("CS305"));
+    assertEquals(6, student.getTotalCredits());
+    assertEquals(1, course.getCurrentEnrollment());
+}
+
+@Test
+void shouldRejectCourseWithZeroCreditsWithoutChangingState() {
+    Student student = new Student("S106", "Kiran");
+    Course course = new Course(
+            "CS306", "Zero Credit Course", 0, 30, true, null);
+
+    RegistrationService service = new RegistrationService();
+
+    assertFalse(service.register(student, course));
+    assertFalse(student.isRegistered("CS306"));
+    assertEquals(0, student.getTotalCredits());
+    assertEquals(0, course.getCurrentEnrollment());
+}
+
+@Test
+void shouldRejectCourseWithSevenCreditsWithoutChangingState() {
+    Student student = new Student("S107", "Divya");
+    Course course = new Course(
+            "CS307", "Seven Credit Course", 7, 30, true, null);
+
+    RegistrationService service = new RegistrationService();
+
+    assertFalse(service.register(student, course));
+    assertFalse(student.isRegistered("CS307"));
+    assertEquals(0, student.getTotalCredits());
+    assertEquals(0, course.getCurrentEnrollment());
+}
+
+@Test
+void shouldRejectCourseWithNegativeCreditsWithoutChangingState() {
+    Student student = new Student("S108", "Vijay");
+    Course course = new Course(
+            "CS308", "Negative Credit Course", -1, 30, true, null);
+
+    RegistrationService service = new RegistrationService();
+
+    assertFalse(service.register(student, course));
+    assertFalse(student.isRegistered("CS308"));
+    assertEquals(0, student.getTotalCredits());
+    assertEquals(0, course.getCurrentEnrollment());
+}
+
 }
